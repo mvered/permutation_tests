@@ -1,5 +1,7 @@
 ## functions to calculate test statistics used in simulations ##
 ## and their associated p-values ##
+library(foreach)
+library(doParallel)
 
 #######################################################
 ##### mann-whitney u statistic #######
@@ -119,16 +121,23 @@ get_multinomial_u_p <- function(x, y, n_perms=100){
   
   # set up for permutation distribution
   pooled <- c(x, y)
-  perm_dist <- rep(NA, n_perms)
   
-  for (i in 1:n_perms){
+  # Set your number of cores
+  cl <-  makeCluster(detectCores() - 1)
+  registerDoParallel(cl)
+  
+  # Run permutations in parallel
+  perm_dist <- foreach(i=1:n_perms, .combine=c, 
+                       .export=c("multinomial_u","h_ts","g_multi")) %dopar% {
     permuted_data <- sample(pooled, replace = FALSE)
     x_star <- permuted_data[1:length(x)]
     y_star <- permuted_data[(length(x)+1):length(pooled)]
-    perm_dist[i] <- multinomial_u(x_star, y_star)
+    multinomial_u(x_star, y_star)
   }
+  
   p_value <-(sum(abs(perm_dist) >= abs(u_observed)) + 1) / (n_perms + 1)
   print(p_value)
+  stopCluster(cl)
   return(p_value)
 }
 

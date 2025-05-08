@@ -40,6 +40,7 @@ no_basement <- data |>
 
 ##############################################################
 #### Simulation where correct answer is to reject the null ###
+print("Sims for Type II")
 
 # initialize empty vectors to store Type II error rate for each tested sample size
 error_t2_standard <- rep(NA, length(n_obs))
@@ -47,6 +48,7 @@ error_t2_perm <- rep(NA, length(n_obs))
 
 # run the simulation for different sample sizes
 for (j in 1:length(n_obs)){
+  print(paste("sims for",n_obs[j],"observations"))
   standard <- rep(NA, n_sims)
   perm <- rep(NA, n_sims)
   
@@ -81,12 +83,15 @@ saveRDS(two_sample_sims.type_2, "output/two_sample_sims_type_2.rds")
 ##############################################################
 #### Simulation where correct answer is fail to reject the null ###
 
+print("Sims for Type I")
+
 # initialize empty vectors to store Type II error rate for each tested sample size
 error_t1_standard <- rep(NA, length(n_obs))
 error_t1_perm <- rep(NA, length(n_obs))
 
 # run the simulation for different sample sizes
 for (j in 1:length(n_obs)){
+  print(paste("sims for",n_obs[j],"observations"))
   standard <- rep(NA, n_sims)
   perm <- rep(NA, n_sims)
   

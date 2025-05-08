@@ -15,6 +15,8 @@ library(tidyverse)
 library(skimr)
 library(quickcode)
 library(kableExtra)
+library(foreach)
+library(doParallel)
 
 # formatting settings
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
@@ -22,6 +24,8 @@ options(digits=1)
 options(scipen=999)
 
 # global params
+# but smaller values had to be used for the multinomial u statistic due to 
+# computational complexity/time challenges, see github repo
 n_sims <- 500  
 n_perms <- 500 
 n_obs <- c(10, 20, 30, 50, 100) 
@@ -29,7 +33,7 @@ n_obs <- c(10, 20, 30, 50, 100)
 
 # Introduction
 
-This project explores the use of permutation tests in the context of two-sample and independence testing. As described in the core paper which is the basis for this project (Kim et al. 2022), permutation tests can provide finite sample guarantees on the Type I error rate and can be minimax optimal in a variety of circumstances. In particular, we focus on the use of permutation test based $U$-statistics as applied to a two-sample comparison of medians as well as in independence testing in high dimensional multinomial problems.
+This project explores the use of permutation tests in the context of two-sample and independence testing. As described in the core paper which is the basis for this project (@kim_minimax_2022), permutation tests can provide finite sample guarantees on the Type I error rate and can be minimax optimal in a variety of circumstances. In particular, we focus on the use of permutation test based $U$-statistics as applied to a two-sample comparison of medians as well as in independence testing in high dimensional multinomial problems.
 
 We utilize a data set on housing prices as the basis for various simulation studies to explore minimax optimality of permutation tests. We divide this data set into two groups and use these groups to represent the true population distributions of some random variable.
 
@@ -43,11 +47,11 @@ In hypothesis testing, we calculate a test statistic based on the sample of data
 
 However, the standard repertoire of hypothesis tests do not work in all situations. When dealing with small sample sizes, or when distributional assumptions required for parametric tests are not met (such as normality), one alternative we can turn to would be a permutation test. Permutation tests are a flexible alternative that allow us to create our own null distribution with which to compare our test statistic rather than assuming a specific distribution.
 
-The basic idea of permutation testing is to randomly re-shuffle the labels of observations, then re-calculate the test statistic. This process is repeated many times to create a distribution for the test statistic under the null (Albert 2015). If we are comparing two samples, for example, if these two samples were drawn from the same underlying population distribution (i.e. the null was true), we would expect that the labels (sample 1 or sample 2) would not matter, so we want to calculate a permutation distribution for the test statistic under that assumption. We then select a critical value for our decision rule based on a quantile of the permutation distribution.
+The basic idea of permutation testing is to randomly re-shuffle the labels of observations, then re-calculate the test statistic. This process is repeated many times to create a distribution for the test statistic under the null (@albert_melisande_tests_2015). If we are comparing two samples, for example, if these two samples were drawn from the same underlying population distribution (i.e. the null was true), we would expect that the labels (sample 1 or sample 2) would not matter, so we want to calculate a permutation distribution for the test statistic under that assumption. We then select a critical value for our decision rule based on a quantile of the permutation distribution.
 
 Formally, assume we have observations $X=X_1,...,X_n$ and $Y=Y_1,...,Y_m$ and define a test statistic $T(X,Y)$ which measures the difference between the two samples. For each permutation, select $n$ observations from the pooled data $X_1,...,X_n,Y_1,...,Y_m$ and label these $$X^*_{(1)}=X_{(1)_1}^*,...,X_{(1)_n}^*$$ and the remainder of observations as $$Y^*_{(1)}=Y_{(1)_1}^*,...,Y_{(1)_n}^*$$ then calculate a permuted test statistic $T^*_{(1)}(X^*,Y^*)$. Repeat this process $n$ times to get $$T^*_{(1)},...,T^*_{(n)}$$ (or repeat many times for a large sample where calculating every possible permutation of the data is computationally unfeasible). Choose a critical value $c^*$ as a quantile from the distribution of $T^*_{(1)},...,T^*_{(n)}$.
 
-It is worth noting that bootstrapping is a related, but slightly different, re-sampling procedure for creating a distribution of the test statistic under the null. As compared with permutation testing, in a bootstrap approach, we re-sample from the original data, with replacement, to generate each new sample rather than permuting the labels of the original data (Janssen and Pauls 2003). However, bootstrapping similarly creates a distribution for the test statistic for which we can find a particular quantile to serve as the critical value.
+It is worth noting that bootstrapping is a related, but slightly different, re-sampling procedure for creating a distribution of the test statistic under the null. As compared with permutation testing, in a bootstrap approach, we re-sample from the original data, with replacement, to generate each new sample rather than permuting the labels of the original data (@janssen_how_2003). However, bootstrapping similarly creates a distribution for the test statistic for which we can find a particular quantile to serve as the critical value.
 
 ## Optimality
 
@@ -57,25 +61,25 @@ To assess the performance of different approaches to hypothesis testing, we are 
 
 In practice, understanding the power of statistical test can be very important, as statisticians are often called upon to help design studies and determine optimal sample sizes for experiments or models to reach sufficient statistical power. Overestimating the sample size needed can lead to unneeded costs in the study implementation/data collection phase, but underestimate the required sample size can result in wasted effort running a study that produces only inconclusive results.
 
-Previous work has explored the minimax optimality of permutation tests in large samples (Robinson 1973) and for simple test statistics such as the $t$-statistic and $F$-statistic (Janssen 2005). A primary contribution of the key paper for this project (Kim et. al. 2022) is to provide a non-asymptotic framework to analyze the minimax Type II error of the permutation test. Their framework is particularly useful for small sample sizes. In one set of Monte Carlo simulations, they focus on simulations with $n_1=n_2=100$.
+Previous work has explored the minimax optimality of permutation tests in large samples (@robinson_large-sample_1952) and for simple test statistics such as the $t$-statistic and $F$-statistic (@janssen_resampling_2005). A primary contribution of the key paper for this project (@kim_minimax_2022) is to provide a non-asymptotic framework to analyze the minimax Type II error of the permutation test. Their framework is particularly useful for small sample sizes. In one set of Monte Carlo simulations, they focus on simulations with $n_1=n_2=100$.
 
-We can define a minimax optimal estimator as one the minimizes the maximum risk. Formally, the maximum risk of an estimator $\widehat{\theta}$ can be expressed as $$\bar{R}(\widehat{\theta})=\sup_{\theta} R(\theta, \widehat{\theta})$$ and a minimax optimal estimator will be one such that $$\sup_{\theta}R(\theta,\widehat{\theta})=\inf_{\tilde{\theta}} \sup_\theta R(\theta, \tilde{\theta})$$ where the infimum is over all estimators $\tilde{\theta}$ (Wasserman 2010).
+We can define a minimax optimal estimator as one the minimizes the maximum risk. Formally, the maximum risk of an estimator $\widehat{\theta}$ can be expressed as $$\bar{R}(\widehat{\theta})=\sup_{\theta} R(\theta, \widehat{\theta})$$ and a minimax optimal estimator will be one such that $$\sup_{\theta}R(\theta,\widehat{\theta})=\inf_{\tilde{\theta}} \sup_\theta R(\theta, \tilde{\theta})$$ where the infimum is over all estimators $\tilde{\theta}$ (@wasserman_all_2010).
 
 In practice, a hypothesis testing approach would be minimax optimal in terms of the Type II error rate when the decision rule it produces minimizes the likelihood of failing to reject the null hypothesis when the null is in fact false, as compared to all other decision rules. This "worst case" situation would be most likely to occur when there is a very small difference between the expected distributions under the null and alternate hypotheses.
 
-As an added step in this project, we also run simulations to measure the Type I error rate. Finite sample guarantees on the Type I error rate are much more well-established, as long as the exchangeability assumption is met. These results are covered in older elements of the literature on permutation tests (Hoeffding 1952).
+As an added step in this project, we also run simulations to measure the Type I error rate. Finite sample guarantees on the Type I error rate are much more well-established, as long as the exchangeability assumption is met. These results are covered in older elements of the literature on permutation tests (@hoeffding_large-sample_1952).
 
 In our simulations, we will use the King County, Washington housing price data as if it were the underlying true population distribution, so simulations will not necessarily be measuring the Type I and Type II error rates under the worst case, closest possible degree of similarity between the null and alternate hypotheses. We also won't be comparing permutation test based approaches with every other possible hypothesis test. But we will be able to measure the Type II minimax optimality of permutation tests in the sense of looking across many different samples from the population and looking at the frequency of Type II errors across the "unluckiest" samples with the worst possible configuration of observations selected to be in the sample.
 
 ## U-Statistics
 
-Here we specifically focus on the use of permutation-based approaches with a class of statistics known as $U$-statistics. We can define $U_n$ as a $U$-statistic with kernel $h$ of degree $m$ as $$U_n = {n \choose m}^{-1} \sum_{(i_i,...,i_m)\in I_{n,m}} h(X_{i_1},...,X_{i_m})$$ where $h$ is a symmetric function over $m$ arguments and we are averaging the outcomes $h(X_{i_1},...,X_{i_m})$ across all possible ordered tuples $I_{n,m}=\{(i_1,...,i_m): 1\leq i_1 <...<i_m \leq n \}$ (Chen 2005, Wasserman 2010). Many estimators can be written to fit the format of this class of statistics, such as the sample variance.
+Here we specifically focus on the use of permutation-based approaches with a class of statistics known as $U$-statistics. We can define $U_n$ as a $U$-statistic with kernel $h$ of degree $m$ as $$U_n = {n \choose m}^{-1} \sum_{(i_i,...,i_m)\in I_{n,m}} h(X_{i_1},...,X_{i_m})$$ where $h$ is a symmetric function over $m$ arguments and we are averaging the outcomes $h(X_{i_1},...,X_{i_m})$ across all possible ordered tuples $I_{n,m}=\{(i_1,...,i_m): 1\leq i_1 <...<i_m \leq n \}$ (@chen_u-statistics_2005, @wasserman_all_2010). Many estimators can be written to fit the format of this class of statistics, such as the sample variance.
 
 ## Two Sample Testing
 
 In two-sample testing, we consider two samples of numeric data. Under the null hypothesis, we assume both samples come from the same underlying population distribution.
 
-There are many options for performing this type of test. $t$-tests are a traditional, parametric approach but assume the underlying data is normally distributed. The Mann-Whitney $U$-test, also called the Wilcoxon rank-sum test, is a non-parametric alternative. The Mann-Whitney $U$-test is a test of both distribution shape and location (the central tendency/median). If we are able to assume that one sample is a shifted version of the distribution of the other sample, then the Mann-Whitney $U$-test is a test that directly allows us to test for a difference in medians (Hart 2001). The Mann-Whitney $U$-statistic is calculated by first defining a rank function that orders the data in both samples $$r(x_i)=\text{rank of }x_i \text{ in }x_1,x_2,...,x_{n_X},y_1,y_2,...,y_{n_Y}$$ Then the test statistic is the smaller of $$U_1=n_Xn_Y + \frac{n_X(n_X+1)}{2}-\sum_{i=1}^{n_X} r(x_i)$$ and $$U_2 = n_X n_Y + \frac{n_Y(n_Y+1)}{2}-\sum_{j=1}^{n_Y} r(y_j)$$
+There are many options for performing this type of test. $t$-tests are a traditional, parametric approach but assume the underlying data is normally distributed. The Mann-Whitney $U$-test, also called the Wilcoxon rank-sum test, is a non-parametric alternative. The Mann-Whitney $U$-test is a test of both distribution shape and location (the central tendency/median). If we are able to assume that one sample is a shifted version of the distribution of the other sample, then the Mann-Whitney $U$-test is a test that directly allows us to test for a difference in medians (@hart_mann_whitney_2001). The Mann-Whitney $U$-statistic is calculated by first defining a rank function that orders the data in both samples $$r(x_i)=\text{rank of }x_i \text{ in }x_1,x_2,...,x_{n_X},y_1,y_2,...,y_{n_Y}$$ Then the test statistic is the smaller of $$U_1=n_Xn_Y + \frac{n_X(n_X+1)}{2}-\sum_{i=1}^{n_X} r(x_i)$$ and $$U_2 = n_X n_Y + \frac{n_Y(n_Y+1)}{2}-\sum_{j=1}^{n_Y} r(y_j)$$
 
 ```{r mann_whitney_stat}
 
@@ -94,7 +98,6 @@ mann_whitney_u <- function(x, y){
 }
 ```
 
-
 While the Mann-Whitney $U$-test is non-parametric in that it does not assume a normal distribution or any other specific distribution for the underlying data, in the standard test we do assume that the distribution of the $U$-statistic under the null can be approximated by the normal distribution. Critical values are then taken that correspond to probabilities of the normal distribution. This approximation tends to work with sufficiently large sample sizes.
 
 For a permutation test based Mann-Whitney $U$-statistic, the $U$-statistic itself would be calculated in exactly the same way, but the reference distribution for finding the critical value would be created through permutation.
@@ -103,11 +106,11 @@ For a permutation test based Mann-Whitney $U$-statistic, the $U$-statistic itsel
 
 In independence testing, we consider two categorical variables. Under the null hypothesis, we assume there is no association between these variables. Here we specifically look to a binary categorical variable and a second categorical variable that has a large number of categories.
 
-A standard approach to multinomial independence testing is to use the Chi-squared test. However, this approach has a number of drawbacks. Kim et al. (2022) highlight the particular utility of permutation testing in high-dimensional multinomial settings, when the the number of categories is large and may even be larger than the number of observations in the sample. The drawbacks of traditional tests for these high dimensional multinomial settings was investigated in Balakrishnan and Wasserman (2018), who suggest permutation tests as a potential solution to explore.
+A standard approach to multinomial independence testing is to use the Chi-squared test. However, this approach has a number of drawbacks. @kim_minimax_2022 highlight the particular utility of permutation testing in high-dimensional multinomial settings, when the the number of categories is large and may even be larger than the number of observations in the sample. The drawbacks of traditional tests for these high dimensional multinomial settings was investigated in @balakrishnan_hypothesis_2018, who suggest permutation tests as a potential solution to explore.
 
-Barrett et. al. (2020) separately also consider the optimality of $U$-statistic based permutation tests for independence testing and arrive at similar results for minimax optimality as Kim et. al. (2022) but by taking a different mathematical approach using different assumptions on smoothness of permutation distributions.
+@berrett_optimal_2020 separately also consider the optimality of $U$-statistic based permutation tests for independence testing and arrive at similar results for minimax optimality as @kim_minimax_2022 but by taking a different mathematical approach using different assumptions on smoothness of permutation distributions.
 
-Kim et al. (2022) propose a new $U$-statistic for independence testing in high dimensional multinomial settings. Let $p_y$ and $p_z$ be multinomial distributions on a discrete domain $\mathbb{S}_d$ with kernel $$h_{ts}(y_1,y_2;z_1,z_2)=g(y_1,y_2)+g(z_1,z_2)-g(y_1,z_2)-g(y_2,z_1)$$ defined by the following bivariate function $$g_\text{Multi}(x,y)=\sum_{k=1}^d \mathbb{I}(x=k)\mathbb{I}(y=k)$$ and the corresponding $U$-statistic $$U_{n_1,n_2}=\frac{1}{(n_1)_{(2)}(n_2)_{(2)}} \sum_{(i_1,i_2)\in i^{n_1}_2} \sum_{(j_1,j_2)\in i^{n_2}_2} h_{ts}(Y_{i_1},Y_{i_2};Z_{j_1},Z_{j_2})$$
+@kim_minimax_2022 propose a new $U$-statistic for independence testing in high dimensional multinomial settings. Let $p_y$ and $p_z$ be multinomial distributions on a discrete domain $\mathbb{S}_d$ with kernel $$h_{ts}(y_1,y_2;z_1,z_2)=g(y_1,y_2)+g(z_1,z_2)-g(y_1,z_2)-g(y_2,z_1)$$ defined by the following bivariate function $$g_\text{Multi}(x,y)=\sum_{k=1}^d \mathbb{I}(x=k)\mathbb{I}(y=k)$$ and the corresponding $U$-statistic $$U_{n_1,n_2}=\frac{1}{(n_1)_{(2)}(n_2)_{(2)}} \sum_{(i_1,i_2)\in i^{n_1}_2} \sum_{(j_1,j_2)\in i^{n_2}_2} h_{ts}(Y_{i_1},Y_{i_2};Z_{j_1},Z_{j_2})$$
 
 A unique contribution of this project is implementing calculation of this test statistic into R.
 
@@ -343,7 +346,6 @@ It seems quite clear from this bar chart that the two populations follow differe
 
 This data represents an ideal scenario to examine independence testing for high dimensional multinomial distributions since there are `r length(unique(data[,"zipcode"]))` distinct zip codes included in the King County, Washington data set.
 
-
 # Results
 
 We now walk through the results of various simulation studies to assess the performance of the permutation test approach.
@@ -360,8 +362,7 @@ no_basement <- data |>
 
 ## Two-Sample Testing
 
-We first perform two-sample testing utilizing a Mann-Whitney $U$-statistic to compare the median and shape of two distributions for the price variable.
-
+We first perform two-sample testing utilizing a Mann-Whitney $U$-statistic to compare the median and shape of two distributions for the price variable. 500 simulations and 500 permutations per simulation were used to create the permutation distributions.
 
 ```{r simulation_functions_two_sample}
 
@@ -516,8 +517,7 @@ two_sample_sims.type_1 |>
   kable(caption = "Type I Error Rate of Two-Sample Testing Using a Mann-Whintey U-Statistic")
 ```
 
-
-From these simulations, it appears the permutation test peforms slightly better than the standard Mann-Whitney U test that uses a normal approximation for the test statistic distributionin terms of the Type I error rate across all sample sizes.
+From these simulations, it appears the permutation test performs better than the standard Mann-Whitney U test that uses a normal approximation for the test statistic distribution terms of the Type I error rate across all sample sizes.
 
 The permutation based approach, at least for the relatively small sample sizes considered, appears to match the performance of the standard Mann-Whitney $U$-test as far as Type II error rates are concerned while reducing Type I error rates. This highlights the value of the permutation-based approach as a tool for two-sample hypothesis testing in small sample sizes with non-normally distributed data.
 
@@ -535,31 +535,40 @@ with_basement <- with_basement |>
 
 ```
 
+The Chi-squared test can be used for this type of testing procedure. However, p-values for the Chi-squared distribution assume certain minimum expected counts per cell. In a larger Chi-squared table, the test assumes that all expected counts must be at least 1 and no more than 20% of cells can have expected frequencies less than 5, or else the p-value may not be valid. We anticipate this to be a major issue in this circumstance and will likely lead to the presence of additional Type I and Type II errors when the Chi-squared test is applied. We perform the Chi-squared test anyway in order to highlight the utility of the alternative permutation-based approach using a $U$-statistic proposed by @kim_minimax_2022.
 
-The Chi-squared test can be used for this type of testing procedure. However, p-values for the Chi-squared distribution assume certain minimum expected counts per cell. In a larger Chi-squared table, the test assumes that all expected counts must be at least 1 and no more than 20% of cells can have expected frequencies less than 5, or else the p-value may not be valid. We anticipate this to be a major issue in this circumstance and will likely lead to the presence of additional Type I and Type II errors when the Chi-squared test is applied. We perform the Chi-squared test anyway in order to highlight the utility of the alternative permutation-based approach using a $U$-statistic proposed by Kim et al. (2022). 
+For the sake of comparison, we also report out Type I and II error rates for a Chi-squared test performed with simulated p-values (generated through Monte Carlo simulation using a bootstrapping procedure). Bootstrapping is similar to the permutation-based approach for calculating p-values. However, the Chi-squared test with simulated p-values still differs significantly from the @kim_minimax_2022. in that it is not a $U$-statistic and the test statistic follows a different design/formula from the one specifically proposed by Kim for high-dimensional multinomial testing. We include it to provide another reference point for comparison of the new approach, since p-values calculated through reference to the standard $\chi^2$ distribution are expected to be relatively inaccurate for this use case.
 
-For the sake of comparison, we also report out Type I and II error rates for a Chi-squared test performed with simulated p-values (generated through Monte Carlo simulation using a bootstrapping procedure). Bootstrapping is similar to the permutation-based approach for calculating p-values. However, the Chi-squared test with simulated p-values still differs significantly from the Kim et al.  in that it is not a $U$-statistic and the test statistic follows a different design/formula from the one specifically proposed by Kim for high-dimensional multinomial testing (2022). We include it to provide another reference point for comparison of the new approach, since p-values calculated through reference to the standard $\chi^2$ distribution are expected to be relatively inaccurate for this use case.
+Due to computational limitations, the number of simulations, the number of permutations, and the sample sizes tested are smaller than what we ideally would like to test. 100 simulations were implemented with 100 permutations per simulation used to create the permutation. Some parallelization has been implemented, but further simulations would benefit from another look at parallelizing and optimizing the code as well as cloud computing resources with a greater number of CPUs.
+
 
 ```{r sim_zip_codes, warning=FALSE}
 
 # get p-value for multinomial u using permutation distribution
-get_multinomial_u_p <- function(x, y, n_perms){
-
+get_multinomial_u_p <- function(x, y, n_perms=100){
+  
   # observed sample statistic
   u_observed <- multinomial_u(x, y)
-
+  
   # set up for permutation distribution
   pooled <- c(x, y)
-  perm_dist <- rep(NA, n_perms)
   
-  for (i in 1:n_perms){
+  # Set your number of cores
+  cl <-  makeCluster(detectCores() - 1)
+  registerDoParallel(cl)
+  
+  # Run permutations in parallel
+  perm_dist <- foreach(i=1:n_perms, .combine=c, 
+                       .export=c("multinomial_u","h_ts","g_multi")) %dopar% {
     permuted_data <- sample(pooled, replace = FALSE)
     x_star <- permuted_data[1:length(x)]
     y_star <- permuted_data[(length(x)+1):length(pooled)]
-    perm_dist[i] <- multinomial_u(x_star, y_star)
+    multinomial_u(x_star, y_star)
   }
+  
   p_value <-(sum(abs(perm_dist) >= abs(u_observed)) + 1) / (n_perms + 1)
   print(p_value)
+  stopCluster(cl)
   return(p_value)
 }
 
@@ -608,7 +617,7 @@ simulation_independence_test <- function(x, y, n = 100, alpha = 0.05){
 
 ### Type II Errors
 
-We now perform independence testing across a number of simulations, comparing the Type II error rates generated through use of a $\chi^2$ test with standard p-values (calculated through reference to a $\chi^2$ distribution), a $\chi^2$ test with simulated (Monte Carlo) p-values, through the multinomial $U$-statistic permutation test proposed  Kim et al (2022).
+We now perform independence testing across a number of simulations, comparing the Type II error rates generated through use of a $\chi^2$ test with standard p-values (calculated through reference to a $\chi^2$ distribution), a $\chi^2$ test with simulated (Monte Carlo) p-values, through the multinomial $U$-statistic permutation test proposed @kim_minimax_2022.
 
 ```{r typeII_sim_independence, eval=FALSE}
 
@@ -659,6 +668,7 @@ independence_sims.type_2 <- data.frame(`Observations` = n_obs,
 
 
 ```
+
 ```{r table_indepedence_type_2_error }
 
 # independence testing type 2 error table
@@ -668,7 +678,9 @@ independence_sims.type_2 |>
   kable(caption = "Type II Error Rate of Multinomial Independence Testing")
 ```
 
-From these simulations, it appears the permutation test performs...
+The error rate for all methods is high, which is predictable considering this is a high-dimensional multinomial setting and the sample sizes are quite small. No matter the method, it is difficult to correctly detect from just 10 or 20 observations that distribution of zip codes is related to having a basement, since there are `r length(unique(data[,"zipcode"]))` distinct zip codes included in the King County, Washington data set. We would expect the prevalence of Type II errors to decline across all methods as the sample size increases. 
+
+However, from these limited simulations, it appears the permutation test performs better than the Chi-squared test (both versions) in terms of the Type II error rate.
 
 ### Type I Errors
 
@@ -729,7 +741,7 @@ independence_sims.type_1 |>
   kable(caption = "Type I Error Rate of Multinomial Independence Testing")
 ```
 
-From these simulations, it appears the permutation test performs...
+From these simulations, it appears the permutation test performs similarly (or perhaps slightly worse) than the Chi-squared tests. More precision in these estimates might be possible with a larger number of simulations. 
 
 # Conclusions
 
@@ -737,19 +749,18 @@ Our simulations show that the permutation-test based approach is a useful tool w
 
 We first looked at two-sample testing, comparing the medians of two numeric samples of data. At least for the small sample sizes considered, the Type II error rate for p-values obtained through permutation versus through approximation to the normal distribution are roughly similar. However, the permutation approach appeared to reduce Type I error rates. This highlights the value of the permutation-based approach as a tool for two-sample hypothesis testing in small sample sizes with non-normally distributed data.
 
-We then looked at independence testing for two categorical variables. We found ...
+We then looked at independence testing for two categorical variables. We try to infer a general trend from the few sample sizes examined within the scope of this paper and identify the multinomial $U$-statistic as a potentially viable option for independence testing with categorical variables.
 
-However, we do note that permutation testing has some drawbacks, namely the computational complexity. Permutation testing is not a very practical approach for larger data sets due to the time required to run. Even here with very small sample sizes, the simulations took a long time to run, particularly when calculating the multinomial U-statistic proposed by Kim et al. Future implementations of that statistic might wish to consider parallelizing computation, since permuted test statistics can be calculated simultaneously rather than sequentially. This would speed up the process of generating a permutation distribution. 
+However, we do note that permutation testing has some drawbacks, namely the computational complexity. Permutation testing is not a very practical approach for larger data sets due to the time required to run. Even here with very small sample sizes, the simulations took a long time to run, particularly when calculating the multinomial $U$-statistic proposed by Kim et al. This $U$-statistic was very slow to compute, a permutation distribution of this statistic even more so. Future implementations of that statistic might wish to consider optimizations to code to better take advantage of parallelization and also to use cloud computing tools with a larger number of CPUs, since permuted test statistics can be calculated simultaneously rather than sequentially. This would speed up the process of generating a permutation distribution. 
 
 Still, permutation tests are useful for smaller sample sizes. While so much of today's data comes in large data sets, there are settings in which we need to draw inferences from small sample sizes, such as medical studies with a complex or costly procedure or for a rare disease where it is difficult to recruit a large pool of subjects. Another example is in comparing the performance of large machine learning or AI models where training such models may take days or longer, so training these models many times to produce a large data set upon which to draw inferences is impractical.
 
-# References
-
-
 # Appendix (Code)
 
-The following appendix contains all the code used in this project. The code also be found, broken out more into separate files/functions, on github at www.github.com/mvered. 
+The following appendix contains all the code used in this project. The code also be found, broken out more into separate files/functions, on github at www.github.com/mvered/permutation_tests.
 
 ```{r ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 
 ```
+
+# References

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.14)  7 MAY 2025 12:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.14)  7 MAY 2025 21:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -269,11 +269,14 @@ Package graphics Info: Driver file: pdftex.def on input line 106.
 )
 \Gin@req@height=\dimen182
 \Gin@req@width=\dimen183
-) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+)
+\cslhangindent=\skip64
+\csllabelwidth=\skip65
+(c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
-\multirow@colwidth=\skip64
+\multirow@colwidth=\skip66
 \multirow@cntb=\count301
-\multirow@dima=\skip65
+\multirow@dima=\skip67
 \bigstrutjot=\dimen184
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen185
@@ -292,7 +295,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
 \everycr=\toks31
-\minrowclearance=\skip66
+\minrowclearance=\skip68
 \rownum=\count304
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
@@ -332,7 +335,7 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \tabu@arstrutbox=\box68
 \tabu@hleads=\box69
 \tabu@vleads=\box70
-\tabu@cellskip=\skip67
+\tabu@cellskip=\skip69
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box71
@@ -343,11 +346,11 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\TPTL@width=\skip68
+\TPTL@width=\skip70
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box72
 \UL@hyphenbox=\box73
-\UL@skip=\skip69
+\UL@skip=\skip71
 \UL@hook=\toks34
 \UL@height=\dimen198
 \UL@pe=\count312
@@ -465,12 +468,12 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip70
+\Hy@SectionHShift=\skip72
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
 \BKM@id=\count325
 ))
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 137.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 170.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -480,24 +483,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 137.
-LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 170.
+LaTeX Font Info:    ... okay on input line 170.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -538,95 +541,97 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 137.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 139.
+Package hyperref Info: Link coloring OFF on input line 170.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 139.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 139.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 139.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 139.
+(Font)              <12> on input line 172.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 139.
+(Font)              <8> on input line 172.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 139.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 139.
+(Font)              <6> on input line 172.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 139.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 172.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 147.
+(Font)              <10> on input line 181.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 147.
+(Font)              <7> on input line 181.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 147.
+(Font)              <5> on input line 181.
 
 
 [1
 
 {c:/Users/me/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}]
 
-[2{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+[2{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 300.
+(amsmath)                 on input line 334.
 
 
 
-[3]
+[3{c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
 
 [4]
-Overfull \hbox (1.01726pt too wide) in paragraph at lines 500--501
+Overfull \hbox (1.01726pt too wide) in paragraph at lines 535--536
 []\T1/lmr/m/n/10 skim_variable  
  []
 
 
-Overfull \hbox (1.79074pt too wide) in paragraph at lines 502--503
+Overfull \hbox (1.79074pt too wide) in paragraph at lines 537--538
  []\T1/lmr/m/n/10 n_missing
  []
 
 
-Overfull \hbox (2.62837pt too wide) in paragraph at lines 504--505
+Overfull \hbox (2.62837pt too wide) in paragraph at lines 539--540
  []\T1/lmr/m/n/10 complete_rate
  []
 
 
-Overfull \hbox (3.0074pt too wide) in paragraph at lines 508--509
+Overfull \hbox (3.0074pt too wide) in paragraph at lines 543--544
  []\T1/lmr/m/n/10 n_unique
  []
 
+
+
 [5]
-Overfull \hbox (0.71005pt too wide) in paragraph at lines 553--554
+Overfull \hbox (0.71005pt too wide) in paragraph at lines 588--589
  []\T1/lmr/m/n/10 n_missing
  []
 
 
-Overfull \hbox (1.1256pt too wide) in paragraph at lines 555--556
+Overfull \hbox (1.1256pt too wide) in paragraph at lines 590--591
  []\T1/lmr/m/n/10 complete_rate
  []
 
 
-Overfull \hbox (2.04233pt too wide) in paragraph at lines 584--584
+Overfull \hbox (2.04233pt too wide) in paragraph at lines 619--619
 []|\T1/lmr/m/n/10 sqft_basement|  
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 603.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 638.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -635,12 +640,12 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 <report_files/figure-latex/histogram_basement_price-1.pdf, id=62, 650.43pt x 325.215pt>
 File: report_files/figure-latex/histogram_basement_price-1.pdf Graphic file (type pdf)
 <use report_files/figure-latex/histogram_basement_price-1.pdf>
-Package pdftex.def Info: report_files/figure-latex/histogram_basement_price-1.pdf  used on input line 659.
+Package pdftex.def Info: report_files/figure-latex/histogram_basement_price-1.pdf  used on input line 694.
 (pdftex.def)             Requested size: 469.76817pt x 234.88408pt.
 <report_files/figure-latex/density_plot_basement_price-1.pdf, id=63, 469.755pt x 325.215pt>
 File: report_files/figure-latex/density_plot_basement_price-1.pdf Graphic file (type pdf)
 <use report_files/figure-latex/density_plot_basement_price-1.pdf>
-Package pdftex.def Info: report_files/figure-latex/density_plot_basement_price-1.pdf  used on input line 670.
+Package pdftex.def Info: report_files/figure-latex/density_plot_basement_price-1.pdf  used on input line 705.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
@@ -648,217 +653,131 @@ Package pdftex.def Info: report_files/figure-latex/density_plot_basement_price-1
 <report_files/figure-latex/zip_by_basement-1.pdf, id=76, 722.7pt x 1445.4pt>
 File: report_files/figure-latex/zip_by_basement-1.pdf Graphic file (type pdf)
 <use report_files/figure-latex/zip_by_basement-1.pdf>
-Package pdftex.def Info: report_files/figure-latex/zip_by_basement-1.pdf  used on input line 690.
+Package pdftex.def Info: report_files/figure-latex/zip_by_basement-1.pdf  used on input line 725.
 (pdftex.def)             Requested size: 325.21199pt x 650.424pt.
 
 
 [8 <./report_files/figure-latex/density_plot_basement_price-1.pdf>]
 
 [9 <./report_files/figure-latex/zip_by_basement-1.pdf>] [10]
-Overfull \hbox (10.68144pt too wide) in paragraph at lines 866--867
- []\T1/lmr/m/n/10 Observations
- []
-
-
-Overfull \hbox (38.70874pt too wide) in paragraph at lines 868--869
-[]\T1/lmr/m/n/10 Standard.Chi.Square.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (38.72208pt too wide) in paragraph at lines 870--871
-[]\T1/lmr/m/n/10 Bootstrap.Chi.Square.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (30.66586pt too wide) in paragraph at lines 872--873
-[]\T1/lmr/m/n/10 Permutation.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (10.68144pt too wide) in paragraph at lines 878--879
- []\T1/lmr/m/n/10 Observations
- []
-
-
-Overfull \hbox (38.70874pt too wide) in paragraph at lines 880--881
-[]\T1/lmr/m/n/10 Standard.Chi.Square.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (38.72208pt too wide) in paragraph at lines 882--883
-[]\T1/lmr/m/n/10 Bootstrap.Chi.Square.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (30.66586pt too wide) in paragraph at lines 884--885
-[]\T1/lmr/m/n/10 Permutation.Type.II.Error.Rate  
- []
-
-
-Overfull \hbox (9.54967pt too wide) in paragraph at lines 906--907
- []\T1/lmr/m/n/10 Observations
- []
-
-
-Overfull \hbox (34.99205pt too wide) in paragraph at lines 908--909
-[]\T1/lmr/m/n/10 Standard.Chi.Square.Type.I.Error.Rate  
- []
-
-
-Overfull \hbox (34.91933pt too wide) in paragraph at lines 910--911
-[]\T1/lmr/m/n/10 Bootstrap.Chi.Square.Type.I.Error.Rate  
- []
-
-
-Overfull \hbox (27.64412pt too wide) in paragraph at lines 912--913
-[]\T1/lmr/m/n/10 Permutation.Type.I.Error.Rate  
- []
-
-
-Overfull \hbox (9.54967pt too wide) in paragraph at lines 918--919
- []\T1/lmr/m/n/10 Observations
- []
-
-
-Overfull \hbox (34.99205pt too wide) in paragraph at lines 920--921
-[]\T1/lmr/m/n/10 Standard.Chi.Square.Type.I.Error.Rate  
- []
-
-
-Overfull \hbox (34.91933pt too wide) in paragraph at lines 922--923
-[]\T1/lmr/m/n/10 Bootstrap.Chi.Square.Type.I.Error.Rate  
- []
-
-
-Overfull \hbox (27.64412pt too wide) in paragraph at lines 924--925
-[]\T1/lmr/m/n/10 Permutation.Type.I.Error.Rate  
- []
-
-
 
 [11]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 984.
+
+[12]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1018.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 986.
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 1120.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1020.
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 1158.
 (c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-[12]
-Underfull \vbox (badness 10000) detected at line 1480
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1480
- []
-
-
-
 [13]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [14]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [15]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [16]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [17]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [18]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [19]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [20]
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1480
+Underfull \vbox (badness 10000) detected at line 1525
  []
 
 
 
 [21]
 
-[22] (./report.aux)
+[22]
+
+[23] (./report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 13624 strings out of 475172
- 212921 string characters out of 5764618
- 699518 words of memory out of 5000000
- 36305 multiletter control sequences out of 15000+600000
+ 13664 strings out of 475172
+ 213856 string characters out of 5764618
+ 694611 words of memory out of 5000000
+ 36332 multiletter control sequences out of 15000+600000
  616853 words of font info for 84 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  89i,8n,93p,405b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb><c:/Users/me/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (22 pages, 398422 bytes).
+Output written on report.pdf (23 pages, 408409 bytes).
 PDF statistics:
- 340 PDF objects out of 1000 (max. 8388607)
- 267 compressed objects within 3 object streams
- 55 named destinations out of 1000 (max. 500000)
+ 370 PDF objects out of 1000 (max. 8388607)
+ 296 compressed objects within 3 object streams
+ 68 named destinations out of 1000 (max. 500000)
  184 words of extra memory for PDF output out of 10000 (max. 10000000)
 
