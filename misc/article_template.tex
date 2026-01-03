@@ -1,0 +1,61 @@
+% interacttfqsample.tex
+% v1.05 - August 2017
+
+\documentclass[]{interact}
+
+\usepackage{epstopdf}% To incorporate .eps illustrations using PDFLaTeX, etc.
+\usepackage[caption=false]{subfig}% Support for small, `sub' figures and tables
+%\usepackage[nolists,tablesfirst]{endfloat}% To `separate' figures and tables from text if required
+
+%\usepackage[doublespacing]{setspace}% To produce a `double spaced' document if required
+%\setlength\parindent{24pt}% To increase paragraph indentation when line spacing is doubled
+%\setlength\bibindent{2em}% To increase hanging indent in bibliography when line spacing is doubled
+
+\usepackage[numbers,sort&compress]{natbib}% Citation support using natbib.sty
+\bibpunct[, ]{[}{]}{,}{n}{,}{,}% Citation support using natbib.sty
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% Bibliography support using natbib.sty
+
+\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+\usepackage{natbib}
+\bibliographystyle{bib_style}
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+\begin{document}
+
+\title{$title$}
+
+\author{
+\name{$author${a}\thanks{CONTACT $contact$}}
+\affil{\textsuperscript{a}$affiliation$}
+}
+
+\maketitle
+
+\begin{abstract}
+Permutation test based U-statistics can offer finite sample guarantees on Type I and Type II error rates and are minimax optimal in a variety of contexts. We focus on the application of permutation test based \textit{U}-statistics for two-sample comparisons of medians as well as for independence testing in high dimensional multinomial problems. We attempt to validate the minimax framework for permutation test based \textit{U}-statistics proposed by Kim, Balakrishnan, and Wasserman \cite{ilmun_kim_minimax_2022}, by employing a series of simulations to investigate the performance of permutation test against other test statistics and compare Type I and Type II error rates under different sample sizes and different assumptions about the true underlying data distribution.
+\end{abstract}
+
+\begin{keywords}
+permutation tests, \textit{U}-statistics, non-parametric testing, minimax optimality
+\end{keywords}
+
+$body$
+
+\bibliography{$bibliography$}
+
+\end{document}
