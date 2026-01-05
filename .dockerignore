@@ -1,0 +1,13 @@
+# .dockerignore
+*.csv
+.git
+.gitignore
+.RData
+.Rhistory
+permutation_tests.Rproj
+README
+LICENSE
+archived/
+manuscript/
+results/
+scripts/
