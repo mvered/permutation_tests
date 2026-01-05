@@ -1,0 +1,75 @@
+% interacttfqsample.tex
+% v1.05 - August 2017
+
+\documentclass[]{interact}
+
+\usepackage{epstopdf}% To incorporate .eps illustrations using PDFLaTeX, etc.
+\usepackage[caption=false]{subfig}% Support for small, `sub' figures and tables
+%\usepackage[nolists,tablesfirst]{endfloat}% To `separate' figures and tables from text if required
+\usepackage{hyperref}
+\usepackage{siunitx}
+%\usepackage[doublespacing]{setspace}% To produce a `double spaced' document if required
+%\setlength\parindent{24pt}% To increase paragraph indentation when line spacing is doubled
+%\setlength\bibindent{2em}% To increase hanging indent in bibliography when line spacing is doubled
+% Remove \usepackage{natbib}
+$header-includes$
+
+
+\usepackage[numbers,sort&compress]{natbib}% Citation support using natbib.sty
+\bibpunct[, ]{[}{]}{,}{n}{,}{,}% Citation support using natbib.sty
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% Bibliography support using natbib.sty
+
+% Fix for the \pandocbounded error in newer Pandoc versions
+\makeatletter
+\ifdefined\pandocbounded\else
+  \newcommand{\pandocbounded}[1]{#1}
+\fi
+\makeatother
+
+\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+\begin{document}
+
+\title{$title$}
+
+\author{
+\name{$author$\textsuperscript{a}\thanks{CONTACT $contact$}}
+\affil{\textsuperscript{a}$affiliation$}
+}
+
+\maketitle
+
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+\begin{keywords}
+permutation tests, \textit{U}-statistics, non-parametric testing, minimax optimality
+\end{keywords}
+
+$body$
+
+$if(natbib)$
+  $if(biblio-style)$
+  \bibliographystyle{$biblio-style$}
+  $endif$
+  \bibliography{$bibliography$}
+$endif$
+
+\end{document}
