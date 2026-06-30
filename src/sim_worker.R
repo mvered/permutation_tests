@@ -10,12 +10,18 @@ library(optparse)
 # 2. PARSE ARGUMENTS
 # Passed from entrypoint.sh (e.g., --index 42 --test twosample --n_obs 50)
 option_list <- list(
-  make_option(c("-i", "--index"), type = "integer", default = 0, help = "Job index for seeding"),
-  make_option(c("-t", "--test"), type = "character", default = "twosample", help = "Test type"),
-  make_option(c("-n_o", "--n_obs"), type = "integer", default = 10, help = "Sample size"),
-  make_option(c("-n_p","n_perms"), type="integer", default=500, help="Num permutations for distribution"),
-  make_option(c("-d1","--data1"), type="character", default = "home_data.rds", help="data for 1st sample"),
-  make_option(c("-d2","--data2"), type="character", default = "home_data.rds", help="data for 2nd sample")
+  make_option(c("-i", "--index"), type = "integer", 
+              default = 0, help = "Job index for seeding"),
+  make_option(c("-t", "--test"), type = "character", 
+              default = "twosample", help = "Test type"),
+  make_option(c("-n_o", "--n_obs"), type = "integer", 
+              default = 10, help = "Sample size"),
+  make_option(c("-n_p","n_perms"), type="integer", 
+              default=500, help="Num permutations for distribution"),
+  make_option(c("-d1","--data1"), type="character", 
+              default = "home_data.rds", help="data for 1st sample"),
+  make_option(c("-d2","--data2"), type="character", 
+              default = "home_data.rds", help="data for 2nd sample")
 )
 opt <- parse_args(OptionParser(option_list = option_list))
 
@@ -35,7 +41,8 @@ data2 <- readRDS(paste0("../data/",opt$data2))
 
 # 5. EXECUTION LOGIC
 # We run exactly ONE simulation iteration per job
-message(sprintf("Running %s simulation [Index: %d, N_Obs: %d]", opt$test, opt$index, opt$n_obs))
+message(sprintf("Running %s simulation [Index: %d, N_Obs: %d]", 
+                opt$test, opt$index, opt$n_obs))
 
 if (opt$test == "twosample") {
   # Two-sample comparison (e.g., with_basement vs no_basement)
@@ -78,7 +85,7 @@ if (opt$test == "twosample") {
     n_perms        = opt$n_perms,
     p_val_chisq_std= p_vals["chisq_standard"],
     p_val_chisq_sim= p_vals["chisq_simulated"],
-    p_val_chisq_sim= p_vals["permutation_u"],
+    p_val_perm_u   = p_vals["permutation_u"],
     reject_chisq_std_05   = as.numeric(p_vals["chisq_standard"] < 0.05),
     reject_chisq_sim_05   = as.numeric(p_vals["chisq_simulated"] < 0.05),
     reject_perm_u_05      = as.numeric(p_vals["permutation_u"] < 0.05),
