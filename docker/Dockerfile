@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     curl \
     unzip \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Install AWS CLI v2
@@ -37,6 +38,8 @@ COPY data/ /app/data/
 
 # Copy the entrypoint script from the docker folder
 COPY docker/entrypoint.sh /app/entrypoint.sh
+# fix windows line endings
+RUN dos2unix /app/entrypoint.sh
 
 # 5. Pre-compile C++ Logic
 # Doing this during 'build' means the 1,000 workers don't waste 
