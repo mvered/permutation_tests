@@ -1,0 +1,262 @@
+=== SIMULATION TASK RUNTIME ERROR LOG | EXECUTION: run_20260630_230134_2sims ===
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:07
+JOB NAME:    Sim_twosample_real_N30_price_no_basement_vs_price_with_basement
+JOB ID:      204c032b-3a8b-4dab-945d-df77b309acb4
+TEST TYPE:   twosample
+DATA SOURCE: real
+N OBS:       30
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:07
+JOB NAME:    Sim_independence_real_N20_home_data_x_vs_home_data_x
+JOB ID:      576fdf25-14ef-4a11-89f9-9af4b872b681
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:07
+JOB NAME:    Sim_independence_real_N20_home_data_x_vs_home_data_y
+JOB ID:      815af225-0115-4ff0-90df-4f5a936b091c
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:42
+JOB NAME:    Sim_twosample_real_N30_price_no_basement_vs_price_no_basement
+JOB ID:      af227947-4401-4dba-8f81-520e0be89259
+TEST TYPE:   twosample
+DATA SOURCE: real
+N OBS:       30
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:42
+JOB NAME:    Sim_twosample_real_N100_price_no_basement_vs_price_no_basement
+JOB ID:      cbb9598a-3011-498e-aee2-d06364bf3fa9
+TEST TYPE:   twosample
+DATA SOURCE: real
+N OBS:       100
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:05:42
+JOB NAME:    Sim_twosample_real_N100_price_no_basement_vs_price_with_basement
+JOB ID:      fb291480-ef24-45bb-bceb-c0bbde21bfe2
+TEST TYPE:   twosample
+DATA SOURCE: real
+N OBS:       100
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:06:51
+JOB NAME:    Sim_independence_real_N40_home_data_x_vs_home_data_x
+JOB ID:      e0c3ae17-8b90-4aa3-9dbd-51a6418edca6
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:06:51
+JOB NAME:    Sim_independence_real_N40_home_data_x_vs_home_data_y
+JOB ID:      3a41cd98-0ac3-408c-91be-310ec7d1af81
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:06:51
+JOB NAME:    Sim_independence_real_N60_home_data_x_vs_home_data_y
+JOB ID:      1146de1b-1683-4f92-a0d6-6621ebb11307
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       60
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:07:25
+JOB NAME:    Sim_independence_real_N60_home_data_x_vs_home_data_x
+JOB ID:      bf1e0413-157c-4830-9dc1-c789c31649fa
+TEST TYPE:   independence
+DATA SOURCE: real
+N OBS:       60
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:08:33
+JOB NAME:    Sim_independence_multi_uniform_N20_Cats50
+JOB ID:      849cdfde-c181-4ff8-b13b-ba2f365ff0e7
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:08:33
+JOB NAME:    Sim_independence_multi_dense_N20_Cats100
+JOB ID:      0cd337a7-f525-400e-b7e3-b4af343b99a6
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:08:33
+JOB NAME:    Sim_independence_multi_uniform_N20_Cats300
+JOB ID:      94ab3eea-85a5-446d-9a52-37eaffc5b0af
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:09:06
+JOB NAME:    Sim_independence_multi_uniform_N20_Cats10
+JOB ID:      a16d02fa-1371-413f-8a56-e8e4109e864a
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:09:40
+JOB NAME:    Sim_independence_multi_dense_N20_Cats10
+JOB ID:      4c8e8ada-5765-49d4-96f4-78f1de0ca448
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:09:40
+JOB NAME:    Sim_independence_multi_uniform_N20_Cats100
+JOB ID:      b45ca05c-e05b-44e2-a11d-5c213f5d9aeb
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:09:40
+JOB NAME:    Sim_independence_multi_dense_N20_Cats300
+JOB ID:      9cf95fd6-ae30-43a7-8f7a-048e5a1e7216
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:10:13
+JOB NAME:    Sim_independence_multi_dense_N20_Cats50
+JOB ID:      2e2a0608-00e0-409b-ae15-ba853db2bd37
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:11:19
+JOB NAME:    Sim_independence_multi_uniform_N20_Cats500
+JOB ID:      85b64aaa-52e3-45fe-b5f0-58a4407b41dd
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:11:19
+JOB NAME:    Sim_independence_multi_dense_N20_Cats500
+JOB ID:      682d86fa-4413-40c9-bdbd-ed0509b4aabe
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       20
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:11:19
+JOB NAME:    Sim_independence_multi_dense_N40_Cats10
+JOB ID:      c048361f-0520-4ead-b086-80a6e29678ec
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:12:24
+JOB NAME:    Sim_independence_multi_uniform_N40_Cats10
+JOB ID:      9558a094-a085-4595-8c1e-859e297eb638
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:12:24
+JOB NAME:    Sim_independence_multi_uniform_N40_Cats50
+JOB ID:      5183179b-442e-4d44-8484-a4fdb4bf0735
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:12:24
+JOB NAME:    Sim_independence_multi_dense_N40_Cats50
+JOB ID:      be1226d2-b68f-4fbf-ba8a-8f4fbe4f0d38
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:12:57
+JOB NAME:    Sim_independence_multi_uniform_N40_Cats100
+JOB ID:      864eb087-a87a-42d4-9b88-355175a89736
+TEST TYPE:   independence
+DATA SOURCE: multi_uniform
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
+--------------------------------------------------
+TIMESTAMP:   2026-06-30 23:13:29
+JOB NAME:    Sim_independence_multi_dense_N40_Cats100
+JOB ID:      d1ad944a-a707-47b7-86b2-261be85b3316
+TEST TYPE:   independence
+DATA SOURCE: multi_dense
+N OBS:       40
+AWS REASON:  Array Child Job failed
+--------------------------------------------------
+
