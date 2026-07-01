@@ -133,7 +133,7 @@ def retrieve_compile_data(run_folder, BUCKET_NAME="stats-research"):
                 print(f"Failed processing object at {key}: {str(e)}")
 
     # 2. PROCESS AND EXPORT DATA
-    output_dir = "results/raw_simulation_output/{run_folder}"
+    output_dir = 'results/raw_simulation_output/f"{run_folder}"'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
