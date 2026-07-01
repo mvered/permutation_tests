@@ -17,7 +17,7 @@ echo "Starting deployment for $REPO_NAME..."
 # --- 2. DOCKER BUILD ---
 # This builds the image using the Dockerfile in /docker/ but sees the whole project
 echo "Building Docker image..."
-docker build -t $REPO_NAME -f docker/Dockerfile .
+docker build --platform linux/amd64 --no-cache -t $REPO_NAME -f docker/Dockerfile .
 
 # --- 3. ECR AUTHENTICATION ---
 # This logs WSL Docker into the AWS Cloud
