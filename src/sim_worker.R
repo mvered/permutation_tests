@@ -45,9 +45,11 @@ set.seed(opt$index)
 # Note: Paths are relative to the /app/src/ directory in Docker
 source("calculate_p.R")
 source("one_simulation.R")
-sourceCpp("stats_functions.cpp")
+Rcpp::sourceCpp("stats_functions.cpp", cacheDir = "./cpp_cache")
 
 # 4. LOAD REAL DATA, IF USING
+data1 <- NULL
+data2 <- NULL
 if (opt$data_source == "real"){
   data1_path <- paste0("../data/", opt$data1)
   data2_path <- paste0("../data/", opt$data2)
@@ -56,11 +58,7 @@ if (opt$data_source == "real"){
   }
   data1 <- readRDS(data1_path)
   data2 <- readRDS(data2_path)
-}
-else {
-  data1 <- NULL
-  data2 <- NULL
-}
+} 
 
 # 5. EXECUTION LOGIC
 # We run exactly ONE simulation iteration per job
@@ -88,18 +86,25 @@ if (opt$test == "twosample") {
     n_perms        = opt$n_perms,
     mu             = opt$mu,
     shift          = opt$shift,
+    x_data         = opt$data1,
+    y_data         = opt$data2,
     p_val_std      = p_vals["standard"],
     p_val_perm     = p_vals["permutation"]
   )
-  
+
+  # Generate the output filename
+  mu_str <- gsub("\\.", "_", as.character(opt$mu))
+  shift_str <- gsub("\\.", "_", as.character(opt$shift))
+  output_filename <- sprintf("sim_out_%s_%s_n%d_mu%s_shift%s_idx%d.csv", 
+    opt$test, opt$data_source, opt$n_obs, mu_str, shift_str, opt$index)
 } else if (opt$test == "independence") {
   # Independence testing logic
   p_vals <- simulation_independence_test(
     n_obs       = opt$n_obs,
     n_perms     = opt$n_perms,
     data_source = opt$data_source,
-    d_cats.     = opt$d_cats,
-    epsilon.    = opt$epsilon,
+    d_cats      = opt$d_cats,
+    epsilon     = opt$epsilon,
     x_data      = data1, 
     y_data      = data2
   )
@@ -110,17 +115,24 @@ if (opt$test == "twosample") {
     data_source         = opt$data_source,
     n_obs               = opt$n_obs,
     n_perms             = opt$n_perms,
+    d_cats              = opt$d_cats,
+    epsilon             = opt$epsilon,
+    x_data              = opt$data1,
+    y_data              = opt$data2,
     p_val_chisq_std     = p_vals["chisq_standard"],
     p_val_chisq_sim     = p_vals["chisq_simulated"],
     p_val_perm_u        = p_vals["permutation_u"]
+  )
+
+  # Create a unique filename that includes parameters to avoid S3 collisions
+  epsilon_str <- gsub("\\.", "_", as.character(opt$epsilon))
+  output_filename <- sprintf("sim_out_%s_%s_n%d_cats%d_epsilon%s_idx%d.csv", 
+    opt$test, opt$data_source, opt$n_obs, opt$d_cats, epsilon_str, opt$index
   )
 } else {
     stop(paste("Unknown test type:", opt$test))
 }
 
 # 6. EXPORT
-# Create a unique filename that includes parameters to avoid S3 collisions
-output_file <- sprintf("sim_out_%s_%s_n%d_idx%d.csv", opt$test, opt$data_source, opt$n_obs, opt$index)
-write.csv(results_row, file = output_file, row.names = FALSE)
-
-message(sprintf("Successfully saved: %s", output_file))
+write.csv(results_row, file = output_filename, row.names = FALSE)
+message(sprintf("Successfully saved: %s", output_filename))

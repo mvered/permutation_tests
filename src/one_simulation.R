@@ -89,11 +89,18 @@ simulation_independence_test <- function(n_obs = 100,
   
   } else if (data_source == "multi_perturb"){
     # small pertubances in the data in the first two cells
-    p_x <- rep(1/d_cats, d_cats)
-    p_y <- rep(1/d_cats, d_cats)
+    baseline_p <- 1 / d_cats
+    p_x <- rep(baseline_p, d_cats)
+    p_y <- rep(baseline_p, d_cats)
     
-    p_y[1] <- p_y[1] + epsilon
-    p_y[2] <- p_y[2] - epsilon
+    scaled_shift <- baseline_p * epsilon
+    p_y[1] <- p_y[1] + scaled_shift
+    p_y[2] <- p_y[2] - scaled_shift
+
+    # SAFEGUARD: Floor probabilities to prevent negative or zero values
+    p_y <- pmax(p_y, 1e-05)
+    # Re-normalize so the sum equals exactly 1
+    p_y <- p_y / sum(p_y)
 
     samp_x <- sample(1:d_cats, size = n_obs, replace = TRUE, prob = p_x)
     samp_y <- sample(1:d_cats, size = n_obs, replace = TRUE, prob = p_y)
@@ -108,7 +115,7 @@ simulation_independence_test <- function(n_obs = 100,
 
     # Enforce zero-sum vector tracking constraints independently for each execution
     noise <- rnorm(d_cats, mean = 0, sd = 0.01) # generate random noise
-    noise <- noise - mean(noise).               # center the random noise
+    noise <- noise - mean(noise)                # center the random noise
     p_y   <- p_x + noise                        # add the random noise to the original probabilities to generate a new probability vector
     p_y   <- pmax(p_y, 0.00001)                 # make sure there are no negative probabilites
     p_y   <- p_y / sum(p_y)                     # renmoralize so probabilities sum to 1
@@ -130,7 +137,7 @@ simulation_independence_test <- function(n_obs = 100,
   if (data_source == "real"){
     all_possible_categories <- unique(c(samp_x, samp_y))
   } else {
-    all_posible_categories <- as.character(1:d_cats)
+    all_possible_categories <- as.character(1:d_cats)
   }
   pooled_factors <- factor(c(samp_x, samp_y), levels = all_possible_categories)
   group_indicator <- c(rep("Group_X", length(samp_x)), rep("Group_Y", length(samp_y)))
