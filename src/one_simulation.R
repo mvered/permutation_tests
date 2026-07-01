@@ -107,11 +107,11 @@ simulation_independence_test <- function(n_obs = 100,
     set.seed(NULL)  
 
     # Enforce zero-sum vector tracking constraints independently for each execution
-    noise <- rnorm(d_cats, mean = 0, sd = 0.01)
-    noise <- noise - mean(noise) 
-    p_y   <- p_x + noise
-    p_y   <- pmax(p_y, 0.00001) 
-    p_y   <- p_y / sum(p_y)
+    noise <- rnorm(d_cats, mean = 0, sd = 0.01) # generate random noise
+    noise <- noise - mean(noise).               # center the random noise
+    p_y   <- p_x + noise                        # add the random noise to the original probabilities to generate a new probability vector
+    p_y   <- pmax(p_y, 0.00001)                 # make sure there are no negative probabilites
+    p_y   <- p_y / sum(p_y)                     # renmoralize so probabilities sum to 1
 
     samp_x <- sample(1:d_cats, size = n_obs, replace = TRUE, prob = p_x)
     samp_y <- sample(1:d_cats, size = n_obs, replace = TRUE, prob = p_y)
@@ -127,7 +127,11 @@ simulation_independence_test <- function(n_obs = 100,
 
   # 2. Build a 2-Row Contingency Table - This is the format R Needs for chisq.test to perform a test for homogeneity
   # Row 1 is Group X category counts, Row 2 is Group Y category counts
-  all_possible_categories <- unique(c(samp_x, samp_y))
+  if (data_source == "real"){
+    all_possible_categories <- unique(c(samp_x, samp_y))
+  } else {
+    all_posible_categories <- as.character(1:d_cats)
+  }
   pooled_factors <- factor(c(samp_x, samp_y), levels = all_possible_categories)
   group_indicator <- c(rep("Group_X", length(samp_x)), rep("Group_Y", length(samp_y)))
   contingency_table <- table(group_indicator, pooled_factors)

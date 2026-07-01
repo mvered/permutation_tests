@@ -19,7 +19,7 @@ option_list <- list(
   make_option(c("-p","--n_perms"), type="integer", 
               default=500, help="Num permutations for distribution"),
   make_option(c("-s", "--data_source"), type = "character", 
-              default = "real", help="real data or specific theoretical distribution")
+              default = "real", help="real data or specific theoretical distribution"),
 
   make_option(c("-d","--data1"), type="character", 
               default = "home_data.rds", help="data for 1st sample"),
@@ -33,7 +33,7 @@ option_list <- list(
   make_option(c("-f", "--shift"), type = "double", default = 0.0,
               help="shift for mean of t or normal distribution"),
   make_option(c("-k", "--epsilon"), type = "double", default = 0.0,
-              help="pertubation for multinomial uniform distribution"),
+              help="pertubation for multinomial uniform distribution")
 )
 opt <- parse_args(OptionParser(option_list = option_list))
 
@@ -83,11 +83,11 @@ if (opt$test == "twosample") {
   results_row <- data.frame(
     job_index      = opt$index,
     test_type      = "twosample",
-    data_source.   = opt$data_source,
+    data_source    = opt$data_source,
     n_obs          = opt$n_obs,
     n_perms        = opt$n_perms,
     mu             = opt$mu,
-    shift.         = opt$shift,
+    shift          = opt$shift,
     p_val_std      = p_vals["standard"],
     p_val_perm     = p_vals["permutation"]
   )
@@ -107,11 +107,11 @@ if (opt$test == "twosample") {
   results_row <- data.frame(
     job_index           = opt$index,
     test_type           = "independence",
-    data_source.        = opt$data_source,
+    data_source         = opt$data_source,
     n_obs               = opt$n_obs,
     n_perms             = opt$n_perms,
-    p_val_chisq_std.    = p_vals["chisq_standard"],
-    p_val_chisq_sim.    = p_vals["chisq_simulated"],
+    p_val_chisq_std     = p_vals["chisq_standard"],
+    p_val_chisq_sim     = p_vals["chisq_simulated"],
     p_val_perm_u        = p_vals["permutation_u"]
   )
 } else {
