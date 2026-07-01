@@ -3,3 +3,4 @@
 .Rdata
 .Renviron
 /results/logs
+*/__pycache__/
