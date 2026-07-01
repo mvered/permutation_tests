@@ -44,7 +44,7 @@ RUN dos2unix /app/entrypoint.sh
 # 5. Pre-compile C++ Logic
 # Doing this during 'build' means the 1,000 workers don't waste 
 # time (and money) compiling the same code simultaneously
-RUN R -e "Rcpp::sourceCpp('/app/src/stats_functions.cpp')"
+RUN R -e "Rcpp::sourceCpp('/app/src/stats_functions.cpp', cacheDir='/app/src/cpp_cache')"
 
 # 6. Set Permissions and Entrypoint
 RUN chmod +x /app/entrypoint.sh
