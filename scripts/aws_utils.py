@@ -2,8 +2,12 @@
 
 # set up
 import boto3
+import pandas as pd
+import os
+import io
 session = boto3.Session(profile_name='stats-research')
 batch = session.client('batch', region_name='us-east-2')
+s3 = session.client('s3', region_name='us-east-2')
 
 # function to call an aws batch job
 def submit_sim_array(test_name, n_size, bucket, d1="home_data.rds", d2="home_data.rds", 
@@ -34,7 +38,7 @@ def submit_sim_array(test_name, n_size, bucket, d1="home_data.rds", d2="home_dat
         job_name = f"Sim_{test_name}_{data_source}_N{n_size}_Cats{d_cats}_Epsilon{epsilon}"
    
     # This turns "Shift0.5" into "Shift0_5" and "Epsilon0.06" into "Epsilon0_06"
-    job_name = raw_name.replace('.', '_')
+    job_name = job_name.replace('.', '_')
 
     # Compile the environment variable payload array
     environment_payload = [
@@ -70,3 +74,87 @@ def submit_sim_array(test_name, n_size, bucket, d1="home_data.rds", d2="home_dat
     
     # return AWS batch response
     return response
+
+def retrieve_compile_data(run_folder, BUCKET_NAME="stats-research"):
+    """gets individual csvs from aws and combines into one results file"""
+
+    # 1. SCAN FOR FILES
+    base_prefix = f"perm_sim_results/{run_folder}/"
+    print(f"Scanning S3 Bucket under: {base_prefix}...\n")
+
+    paginator = s3.get_paginator('list_objects_v2')
+    pages = paginator.paginate(Bucket=BUCKET_NAME, Prefix=base_prefix)
+    
+    twosample_chunks = []
+    independence_chunks = []
+
+    for page in pages:
+        if 'Contents' not in page:
+            continue
+            
+        for obj in page['Contents']:
+            key = obj['Key']
+            
+            # Filter for valid CSV files
+            if not key.endswith('.csv') or obj['Size'] == 0:
+                continue
+                
+            # Isolate the relative path after the RUN_FOLDER
+            # Example: twosample/normal/n20/chunk_1.csv
+            relative_path = key.replace(base_prefix, "")
+            parts = relative_path.split('/')
+            
+            if len(parts) < 2:
+                continue 
+                
+            test_type = parts[0]  # 'twosample' or 'independence'
+            filename = parts[-1]  # 'chunk_1.csv'
+
+            try:
+                # Stream directly from S3 memory
+                response = s3.get_object(Bucket=BUCKET_NAME, Key=key)
+                csv_bytes = response['Body'].read()
+                
+                # Load CSV (Using its own internal columns for data_source, n_obs, etc.)
+                df_chunk = pd.read_csv(io.BytesIO(csv_bytes))
+                
+                # Light tracking tag just to know the exact source chunk file name if needed
+                df_chunk['s3_filename'] = filename
+                
+                # Route data matrix to its appropriate array bucket
+                if test_type == "twosample":
+                    twosample_chunks.append(df_chunk)
+                    print(f"  Processed [TWOSAMPLE] ➔ {filename}")
+                elif test_type == "independence":
+                    independence_chunks.append(df_chunk)
+                    print(f"  Processed [INDEPENDENCE] ➔ {filename}")
+                
+            except Exception as e:
+                print(f"Failed processing object at {key}: {str(e)}")
+
+    # 2. PROCESS AND EXPORT DATA
+    output_dir = "results/raw_simulation_output/{run_folder}"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    if twosample_chunks:
+        print("\nMerging all Two-Sample data chunks...")
+        df_twosample = pd.concat(twosample_chunks, ignore_index=True)
+        ts_path = os.path.join(output_dir, f"twosample_{run_folder}.csv")
+        df_twosample.to_csv(ts_path, index=False)
+        print(f"Saved Combined Two-Sample File ({df_twosample.shape[0]} rows) ➔ {ts_path}")
+    else:
+        print("\n No Two-Sample simulation datasets detected in this directory run.")
+    
+    if independence_chunks:
+        print("\nMerging all Independence data chunks...")
+        df_independence = pd.concat(independence_chunks, ignore_index=True)
+        ind_path = os.path.join(output_dir, f"independence_{run_folder}.csv")
+        df_independence.to_csv(ind_path, index=False)
+        print(f" Saved Combined Independence File ({df_independence.shape[0]} rows) ➔ {ind_path}")
+    else:
+        print("\n No Independence simulation datasets detected in this directory run.")
+
+    print(f"\n====================================================")
+    print(f"SUCCESS: Results Retrieval Finished.")
+    print(f"====================================================")

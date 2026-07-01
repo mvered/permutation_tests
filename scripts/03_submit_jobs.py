@@ -6,7 +6,7 @@
 import boto3
 import time
 import os
-from aws_utils import submit_sim_array
+from aws_utils import submit_sim_array, retrieve_compile_data
 from datetime import datetime
 
 # aws setup
@@ -19,9 +19,9 @@ MY_RESULTS_BUCKET = "stats-research"
 # ==========================================
 
 # 2. GLOBAL PARAMETERS FOR SIMULATION
-JOB_COUNT = 2            # How many simulations (eventually want 5000)
+JOB_COUNT = 2              # How many simulations (eventually want 5000)
 PERMS_TWOSAMPLE = 10     # permutations for two-sample tests (eventually want 1000)
-PERMS_INDEPENDENCE = 10  # permutations for independence tests (eventually want 500, lower due to computational complexity)
+PERMS_INDEPENDENCE = 10   # permutations for independence tests (eventually want 500, lower due to computational complexity)
 
 # 3. STARTING SCENARIOS FOR SIMULATION (real and theoretical)
 SCENARIOS = [
@@ -62,6 +62,7 @@ SCENARIOS = [
 # 4. DYNAMICALLY GENERATE THE 15-CONFIGURATION GRID MATRIX FOR SCENARIOS 4, 5, AND 6
 n_grid = [20, 40, 60]
 d_grid = [10, 50, 100, 300, 500]
+epsilon_grid = [0.50, 0.70]
 
 for n in n_grid:
     for d in d_grid:
@@ -71,11 +72,12 @@ for n in n_grid:
             "d_cats": d, "n_perms": PERMS_INDEPENDENCE
         })
         
-        # Scenario 5: The Sparse Localized Alternative (Epsilon = 0.06)
-        SCENARIOS.append({
-            "test": "independence", "n": n, "data_source": "multi_perturb", 
-            "d_cats": d, "epsilon": 0.06, "n_perms": PERMS_INDEPENDENCE
-        })
+        # Scenario 5: The Sparse Localized Alternative (Epsilon = 0.5)
+        for eps in epsilon_grid:
+            SCENARIOS.append({
+                "test": "independence", "n": n, "data_source": "multi_perturb", 
+                "d_cats": d, "epsilon": eps, "n_perms": PERMS_INDEPENDENCE
+            })
         
         # Scenario 6: The Dense, Low-Signal Alternative
         SCENARIOS.append({
@@ -159,7 +161,7 @@ if __name__ == "__main__":
         remaining_count = len(submitted_jobs) - len(completed_jobs)
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Status Update: {remaining_count} jobs still PENDING/RUNNING | {len(completed_jobs) - failed_count} SUCCEEDED | {failed_count} FAILED")
         
-        time.sleep(30)
+        time.sleep(60)
         
         for job in submitted_jobs:
             if job["id"] in completed_jobs:
@@ -196,6 +198,10 @@ if __name__ == "__main__":
             except Exception:
                 pass
 
-    # Final wrap-up print statement
-    print(f"\nExecution complete. Total tracked jobs finalized: {len(completed_jobs)} ({len(completed_jobs) - failed_count} Succeeded, {failed_count} Failed).")
+    # Final wrap-up print statement for execution
+    print(f"\nSimulation execution complete. Total tracked jobs finalized: {len(completed_jobs)} ({len(completed_jobs) - failed_count} Succeeded, {failed_count} Failed).")
     print(f"If any structural container tasks failed, check your local results at: {log_file_path}")
+
+    # Export and combine data files
+    retrieve_compile_data(RUN_FOLDER)
+
